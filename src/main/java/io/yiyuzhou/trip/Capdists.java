@@ -12,10 +12,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-public class Capdist {
+public class Capdists {
 	private HashMap<List<String>, Integer> capdists = new HashMap<>();
 
-	public Capdist() throws IOException {
+	public Capdists() throws IOException {
 		capdists = new HashMap<List<String>, Integer>();
 		parseCSV("capdist.csv");
 	}
@@ -26,7 +26,7 @@ public class Capdist {
 
 	private void parseCSV(String fileName) throws IOException {
 		/* Access the file as a resource */
-		try (InputStream is = Capdist.class.getClassLoader().getResourceAsStream(fileName)) {
+		try (InputStream is = Capdists.class.getClassLoader().getResourceAsStream(fileName)) {
 			if (is == null)
 				throw new IOException("Resource not found: " + fileName);
 
