@@ -12,15 +12,21 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 public class StateName {
-	private HashMap<String, Integer> countries;
+	private HashMap<String, Integer> countriesIdNumbers;
+	private HashMap<String, String> countriesNameIds;
 
 	public StateName() {
-		countries = new HashMap<>();
+		countriesIdNumbers = new HashMap<>();
+		countriesNameIds = new HashMap<>();
 		parseStateNames();
 	}
 
-	public int getNumber(String name) {
-		return countries.get(name);
+	public int getNumber(String id) {
+		return countriesIdNumbers.get(id);
+	}
+
+	public String getId(String countryName) {
+		return countriesNameIds.get(countryName);
 	}
 
 	private void parseStateNames() {
@@ -34,8 +40,12 @@ public class StateName {
 			try (CSVParser csvParser = new CSVParser(reader, format)) {
 				for (CSVRecord record : csvParser) {
 					String stateId = record.get("stateid");
+
 					String stateNumber = record.get("statenumber");
-					countries.put(stateId, Integer.parseInt(stateNumber));
+					countriesIdNumbers.put(stateId, Integer.parseInt(stateNumber));
+
+					String countryName = record.get("countryname");
+					countriesNameIds.put(countryName, stateId);
 				}
 			}
 		} catch (Exception e) {
