@@ -84,6 +84,9 @@ public class IRoadTrip {
 		String country0 = reader.readLine();
 		System.out.print("Enter the name of the second country (type EXIT to quit): ");
 		String country1 = reader.readLine();
-		System.out.println(findPath(country0, country1, borders));
+
+		List<String> paths= findPath(country0, country1, borders);
+		for (int i = 0; i < paths.size(); i++)
+			System.out.println(paths.get(i));
 	}
 }
