@@ -20,10 +20,10 @@ public class IRoadTrip {
 	}
 
 	public static List<String> findPath(String country1, String country2, Borders borders) {
-		Set<String> visited = new HashSet<>();
 		PriorityQueue<Node> minDistance = new PriorityQueue<>();
 		HashMap<String, Integer> distances = new HashMap<>();
 		HashMap<String, String> prevNode = new HashMap<>();
+		Set<String> visited = new HashSet<>();
 		List<String> ret;
 
 		/* create nodes for every country and set the distance to infinity */
@@ -35,18 +35,19 @@ public class IRoadTrip {
 		List<String> visitedNodes = new ArrayList<>();
 		ret = visitedNodes;
 
+		/* Dijkstra's algorithm */
 		while (!minDistance.isEmpty()) {
 			Node currentNode = minDistance.poll();
 			String current = currentNode.node;
 
+			if (!visited.contains(current)) /* add to visited set */
+				visited.add(current);
+			else
+				continue; /* skip */
+
 			/* border country */
 			if (distances.get(current) == 1)
 				continue;
-
-			if (!visited.contains(current)) /* add it to the visited set */
-				visited.add(current);
-			else
-				continue; /* skip it */
 
 			if (borders.getGraph().containsKey(current)) {
 				for (Map.Entry<String, Integer> neighbor : borders.getGraph().get(current).entrySet()) {
@@ -68,7 +69,7 @@ public class IRoadTrip {
 		while (!country2.equals(country1)) {
 			String prevCountry = prevNode.get(country2);
 			if (distances.get(country2) == null || distances.get(prevCountry) == null) {
-				ret = null;
+				ret = null; /* no path exists */
 				break;
 			}
 
