@@ -137,7 +137,7 @@ public class Borders {
 		edgeCases.put("Gibraltar 1.2 km", "Gibraltar");
 		edgeCases.put("Holy See (Vatican City) 3.4 km", "Holy See (Vatican City)");
 		edgeCases.put("Denmark (Greenland)", "Denmark");
-		edgeCases.put("Yemen", "Yemen (Arab Republic of Yemen");
+		edgeCases.put("Yemen (Arab Republic of Yemen", "Yemen");
 		edgeCases.put("Tanzania", "Tanzania/Tanganyika");
 		edgeCases.put("The Solomon Islands", "Solomon Islands");
 		edgeCases.put("UK", "United Kingdom");
