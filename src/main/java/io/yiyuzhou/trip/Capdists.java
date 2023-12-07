@@ -41,7 +41,7 @@ public class Capdists {
 			try (CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
 				for (CSVRecord record : csvParser) {
 					if (record.getRecordNumber() > 1) /* skip the first line of csv file which doesn't contain data */
-						capdists.put(Arrays.asList(record.get(1), record.get(3)), Integer.parseInt(record.get(5)));
+						capdists.put(Arrays.asList(record.get(1), record.get(3)), Integer.parseInt(record.get(4)));
 				}
 			}
 		}
