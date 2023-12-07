@@ -13,7 +13,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 public class Capdists {
-	private HashMap<List<String>, Integer> capdists = new HashMap<>();
+	public HashMap<List<String>, Integer> capdists = new HashMap<>();
 
 	public Capdists() throws IOException {
 		capdists = new HashMap<List<String>, Integer>();
@@ -21,7 +21,13 @@ public class Capdists {
 	}
 
 	public int getDistance(String country0, String country1) {
-		return capdists.get(Arrays.asList(country0, country1));
+		int ret;
+		if (capdists.get(Arrays.asList(country0, country1)) == null)
+			ret = -1;
+		else
+			ret = capdists.get(Arrays.asList(country0, country1));
+
+		return ret;
 	}
 
 	private void parseCSV(String fileName) throws IOException {
