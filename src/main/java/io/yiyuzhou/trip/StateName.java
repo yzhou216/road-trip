@@ -36,6 +36,7 @@ public class StateName {
 					String stateId = record.get("stateid");
 
 					String countryName = record.get("countryname");
+					countryName = countryName.replaceAll(" \\(.*?\\)", ""); /* excludes parentheses */
 					countryNameIds.put(countryName, stateId);
 				}
 			}
