@@ -86,14 +86,25 @@ public class IRoadTrip {
 			if (country0.equals("EXIT"))
 				break;
 
+			if (borders.getGraph().get(country0) == null) {
+				System.err.println("Invalid country name. Please enter a valid country name.");
+				continue;
+			}
+
 			System.out.print("Enter the name of the second country (type EXIT to quit): ");
 			String country1 = reader.readLine();
 			if (country0.equals("EXIT"))
 				break;
 
+			if (borders.getGraph().get(country1) == null) {
+				System.err.println("Invalid country name. Please enter a valid country name.");
+				continue;
+			}
+
+			System.out.printf("Route from %s to %s: \n", country0, country1);
 			List<String> paths = findPath(country0, country1, borders);
 			for (int i = 0; i < paths.size(); i++)
-				System.out.println(paths.get(i));
+				System.out.printf("* %s\n", paths.get(i));
 		}
 	}
 }
