@@ -14,16 +14,15 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Borders {
-	private HashMap<String, List<String>> countryAdjacencies;
+	private HashMap<String, HashMap<String, Integer>> graph = new HashMap<>();
+
+	public HashMap<String, HashMap<String, Integer>> getGraph() {
+		return graph;
+	}
 
 	public Borders() throws IOException, ParseException {
 		String[] lines = getBorderFileLines();
-		countryAdjacencies = new HashMap<>();
-		parseCountryBorders(lines, countryAdjacencies);
-	}
-
-	public List<String> getAdjacencies(String country) {
-		return countryAdjacencies.get(country);
+		parseCountryBorders(lines);
 	}
 
 	private String[] getBorderFileLines() throws IOException {
@@ -62,7 +61,10 @@ public class Borders {
 		return ret;
 	}
 
-	private void parseCountryBorders(String[] lines, HashMap<String, List<String>> adjCountries) {
+	private void parseCountryBorders(String[] lines) throws IOException {
+		Capdists capdists = new Capdists();
+		StateName stateName = new StateName();
+
 		for (String line : lines) {
 			String[] parts = line.split(" = ");
 			String country = parts[0];
@@ -75,7 +77,20 @@ public class Borders {
 			/* TODO: fix country name clean up */
 			/* remove parentheses and spaces around them */
 
-			adjCountries.put(country, extractCountries(adjacencies));
+			List<String> adjs = extractCountries(adjacencies);
+
+			if (adjs != null) {
+				HashMap<String, Integer> dest = new HashMap<>(); /* value for graph HashMap */
+				for (int i = 0; i < adjs.size(); i++) {
+					String countryId = stateName.getId(country);
+					String adjId = stateName.getId(adjs.get(i));
+					int dist = capdists.getDistance(countryId, adjId);
+					if (countryId != null && adjId != null && dist != -1)
+						dest.put(adjs.get(i), capdists.getDistance(countryId, adjId));
+				}
+
+				graph.put(country, dest);
+			}
 		}
 	}
 }
