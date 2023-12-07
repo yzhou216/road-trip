@@ -74,23 +74,79 @@ public class Borders {
 			else
 				adjacencies = null;
 
-			/* TODO: fix country name clean up */
-			/* remove parentheses and spaces around them */
-
 			List<String> adjs = extractCountries(adjacencies);
 
 			if (adjs != null) {
 				HashMap<String, Integer> dest = new HashMap<>(); /* value for graph HashMap */
 				for (int i = 0; i < adjs.size(); i++) {
+					/* replace with edge cases in the HashMap */
+					HashMap<String, String> edgeCases = edgeCases();
+					if (edgeCases.get(country) != null)
+						country = edgeCases.get(country);
+
+					if (edgeCases.get(adjs.get(i)) != null)
+						adjs.set(i, edgeCases.get(adjs.get(i)));
+
 					String countryId = stateName.getId(country);
 					String adjId = stateName.getId(adjs.get(i));
 					int dist = capdists.getDistance(countryId, adjId);
-					if (countryId != null && adjId != null && dist != -1)
+					if (dist != -1)
 						dest.put(adjs.get(i), capdists.getDistance(countryId, adjId));
 				}
 
 				graph.put(country, dest);
 			}
 		}
+	}
+
+	private HashMap<String, String> edgeCases() {
+		HashMap<String, String> edgeCases = new HashMap<>();
+		edgeCases.put("United States", "United States of America");
+		edgeCases.put("US", "United States of America");
+		edgeCases.put("Canada 1.3 km", "Canada");
+		edgeCases.put("Czechia", "Czech Republic");
+		edgeCases.put("Turkey (Turkiye)", "Turkey (Ottoman Empire");
+		edgeCases.put("Turkey", "Turkey (Ottoman Empire");
+		edgeCases.put("Korea, South", "Korea, Republic of");
+		edgeCases.put("Korea, North", "Korea, People's Republic of");
+		edgeCases.put("Cambodia", "Cambodia (Kampuchea");
+		edgeCases.put("Vietnam", "Vietnam, Democratic Republic of");
+		edgeCases.put("Russia (Kaliningrad)", "Russia (Soviet Union");
+		edgeCases.put("Russia", "Russia (Soviet Union");
+		edgeCases.put("Russia", "Russia (Soviet Union)");
+		edgeCases.put("Timor-Leste", "East Timor");
+		edgeCases.put("Cabo Verde", "Cape Verde");
+		edgeCases.put("Cote d'Ivoire", "Ivory Coast");
+		edgeCases.put("Gambia, The", "Gambia");
+		edgeCases.put("Bahamas, The", "Bahamas");
+		edgeCases.put("Czechia", "Czech Republic");
+		edgeCases.put("North Macedonia", "Macedonia (Former Yugoslav Republic of");
+		edgeCases.put("Belarus", "Belarus (Byelorussia");
+		edgeCases.put("Macedonia", "Macedonia (Former Yugoslav Republic of");
+		edgeCases.put("The Central African Republic", "Central African Republic");
+		edgeCases.put("Congo, Democratic Republic of the", "Congo, Democratic Republic of (Zaire");
+		edgeCases.put("Congo, Republic of the", "Congo");
+		edgeCases.put("The Republic of the Congo", "Congo");
+		edgeCases.put("Democratic Republic of the Congo", "Congo, Democratic Republic of (Zaire");
+		edgeCases.put("The Slovak Republic", "Slovakia");
+		edgeCases.put("Zimbabwe", "Zimbabwe (Rhodesia");
+		edgeCases.put("Iran", "Iran (Persia");
+		edgeCases.put("Botswana 0.15 km", "Botswana");
+		edgeCases.put("Zambia 0.15 km", "Zambia");
+		edgeCases.put("Denmark (Greenland) 1.3 km", "Denmark");
+		edgeCases.put("Gibraltar 1.2 km", "Gibraltar");
+		edgeCases.put("Holy See (Vatican City) 3.4 km", "Holy See (Vatican City)");
+		edgeCases.put("Denmark (Greenland)", "Denmark");
+		edgeCases.put("Yemen", "Yemen (Arab Republic of Yemen");
+		edgeCases.put("Tanzania", "Tanzania/Tanganyika");
+		edgeCases.put("The Solomon Islands", "Solomon Islands");
+		edgeCases.put("UK", "United Kingdom");
+		edgeCases.put("Germany", "German Federal Republic");
+		edgeCases.put("Spain (Ceuta)", "Spain");
+		edgeCases.put("Morocco (Cueta)", "Morocco");
+		edgeCases.put("Spain 1.2 km", "Spain");
+		edgeCases.put("Italy", "Italy/Sardinia");
+		edgeCases.put("Burkina Faso", "Burkina Faso (Upper Volta");
+		return edgeCases;
 	}
 }
