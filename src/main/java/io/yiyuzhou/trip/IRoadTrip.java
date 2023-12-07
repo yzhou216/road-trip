@@ -80,13 +80,20 @@ public class IRoadTrip {
 
 	public static void acceptUserInput(Borders borders) throws IOException {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.print("Enter the name of the first country (type EXIT to quit): ");
-		String country0 = reader.readLine();
-		System.out.print("Enter the name of the second country (type EXIT to quit): ");
-		String country1 = reader.readLine();
+		for (;;) {
+			System.out.print("Enter the name of the first country (type EXIT to quit): ");
+			String country0 = reader.readLine();
+			if (country0.equals("EXIT"))
+				break;
 
-		List<String> paths= findPath(country0, country1, borders);
-		for (int i = 0; i < paths.size(); i++)
-			System.out.println(paths.get(i));
+			System.out.print("Enter the name of the second country (type EXIT to quit): ");
+			String country1 = reader.readLine();
+			if (country0.equals("EXIT"))
+				break;
+
+			List<String> paths = findPath(country0, country1, borders);
+			for (int i = 0; i < paths.size(); i++)
+				System.out.println(paths.get(i));
+		}
 	}
 }
