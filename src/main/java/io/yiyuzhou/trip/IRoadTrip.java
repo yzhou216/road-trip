@@ -24,6 +24,7 @@ public class IRoadTrip {
 		PriorityQueue<Node> minDistance = new PriorityQueue<>();
 		HashMap<String, Integer> distances = new HashMap<>();
 		HashMap<String, String> prevNode = new HashMap<>();
+		List<String> ret;
 
 		/* create nodes for every country and set the distance to infinity */
 		for (String node : borders.getGraph().keySet())
@@ -32,6 +33,7 @@ public class IRoadTrip {
 		distances.put(country1, 0);
 		minDistance.add(new Node(country1, 0));
 		List<String> visitedNodes = new ArrayList<>();
+		ret = visitedNodes;
 
 		while (!minDistance.isEmpty()) {
 			Node currentNode = minDistance.poll();
@@ -66,8 +68,10 @@ public class IRoadTrip {
 		while (!country2.equals(country1)) {
 			String prevCountry = prevNode.get(country2);
 			if (distances.get(country2) == null || distances.get(prevCountry) == null) {
-				return null;
+				ret = null;
+				break;
 			}
+
 			int distance = distances.get(country2) - distances.get(prevCountry);
 			visitedNodes.add(prevCountry + " --> " + country2 + " (" + distance + " km.)");
 			country2 = prevCountry;
@@ -75,7 +79,7 @@ public class IRoadTrip {
 
 		Collections.reverse(visitedNodes);
 
-		return visitedNodes;
+		return ret;
 	}
 
 	public static void acceptUserInput(Borders borders) throws IOException {
